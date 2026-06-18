@@ -51,7 +51,7 @@ public void call(Map<String,Object> map, Map typeConf){
 			}
 			def attFolder = getDir("${entry.key}_",typeConf)
 			if(attFolder.isDirectory()){
-				def atts = []
+				List<Attachment> atts = []
 				attFolder.eachFile(FileType.FILES){ k -> atts.add(new Attachment.File(k)) }
 				if(atts){
 					Attacher attacher = new Attacher()
