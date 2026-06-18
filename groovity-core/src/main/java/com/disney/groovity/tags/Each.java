@@ -24,9 +24,11 @@
 package com.disney.groovity.tags;
 import groovy.lang.Closure;
 
-import java.util.Arrays;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 
 import com.disney.groovity.doc.Attr;
@@ -118,7 +120,12 @@ public class Each implements Taggable {
 			in = Collections.list((Enumeration)in);
 		}
 		if(in.getClass().isArray()){
-			in = Arrays.asList((Object[])in);
+			int len = Array.getLength(in);
+			List<Object> list = new ArrayList<>(len);
+			for(int i = 0; i < len; i++){
+				list.add(Array.get(in, i));
+			}
+			in = list;
 		}
 		if(!(in instanceof Iterable)){
 			throw new RuntimeException("Each tag requires an iterable 'in' attribute, not "+in+" of type "+in.getClass().getName());
