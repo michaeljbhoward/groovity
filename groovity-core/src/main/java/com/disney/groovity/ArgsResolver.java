@@ -147,7 +147,7 @@ public class ArgsResolver {
 	}
 	
 	public void setArgsDef(Map<String,Object> argsDef){
-		ArrayList<ArgDef> adefs = new ArrayList<ArgDef>();
+		ArrayList<ArgDef> adefs = new ArrayList<>();
 		for(Entry<String,Object> e: argsDef.entrySet()){
 			adefs.add(new ArgDef(e.getKey(), Optional.ofNullable(e.getValue())));
 		}

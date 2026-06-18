@@ -84,7 +84,7 @@ public class PathTemplateMethods implements Comparable<PathTemplateMethods>{
 		this.methods=methods;
 		StringBuilder builder = new StringBuilder();
 		if(methods!=null){
-			ArrayList<String> mtds = new ArrayList<String>(methods);
+			ArrayList<String> mtds = new ArrayList<>(methods);
 			Collections.sort(mtds);
 			for(int i=0;i<mtds.size();i++){
 				if(i>0){

@@ -130,7 +130,7 @@ public class GroovityScriptView implements AuthConstants{
 		}
 		this.charsets=getStaticValues("charset");
 		List<String> langs = getStaticValues("language");
-		List<Locale> locs = new ArrayList<Locale>();
+		List<Locale> locs = new ArrayList<>();
 		if(langs!=null){
 			for(String lang: langs){
 				String[] tag = lang.split("[-_]");
@@ -172,7 +172,7 @@ public class GroovityScriptView implements AuthConstants{
 			} 
 		}
 		this.methods = getStaticValues("method");
-		Set<String> mtds = methods!=null ? new HashSet<String>(methods) : null;
+		Set<String> mtds = methods!=null ? new HashSet<>(methods) : null;
 		if(mtds!=null && mtds.contains("GET") && !mtds.contains("HEAD")){
 			//implicitly support HEAD if GET is supported
 			mtds.add("HEAD");
@@ -187,7 +187,7 @@ public class GroovityScriptView implements AuthConstants{
 					mtds.add("OPTIONS");
 					if(corsMap.get("methods")==null){
 						//if no specific CORS methods are configured but the script has methods, let's sync them up
-						corsMap.put("methods",new ArrayList<String>(mtds));
+						corsMap.put("methods",new ArrayList<>(mtds));
 					}
 				}
 				this.corsProcessor = corsFactory.createProcessor(corsMap);
@@ -305,7 +305,7 @@ public class GroovityScriptView implements AuthConstants{
 	}
 
 	private List<String> getStaticValues(String fieldName){
-		List<String> outputs = new ArrayList<String>();
+		List<String> outputs = new ArrayList<>();
 		if(webMap!=null){
 			Object val = webMap.get(fieldName);
 			if(val!=null){
@@ -331,7 +331,7 @@ public class GroovityScriptView implements AuthConstants{
 	}
 	
 	private List<Object> getStaticObjects(String fieldName){
-		List<Object> outputs = new ArrayList<Object>();
+		List<Object> outputs = new ArrayList<>();
 		if(webMap!=null){
 			Object val = webMap.get(fieldName);
 			if(val!=null){

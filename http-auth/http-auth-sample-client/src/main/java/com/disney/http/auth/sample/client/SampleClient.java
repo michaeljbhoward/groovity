@@ -24,14 +24,8 @@
 package com.disney.http.auth.sample.client;
 
 import com.disney.http.auth.AuthConstants;
-import com.disney.http.auth.client.KeyUtils;
 import com.disney.http.auth.client.keyloader.KeyObjectKeyLoader;
-import com.disney.http.auth.client.keyloader.KeyChainKeyLoader;
 import com.disney.http.auth.client.signer.HttpSignatureSigner;
-import com.disney.http.auth.keychain.KeyChain;
-import com.disney.http.auth.keychain.KeyStoreKeyChainImpl;
-import com.disney.uriparcel.URIParcel;
-import com.disney.uriparcel.value.KeyStoreValueHandler;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -41,11 +35,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
-import java.io.File;
-import java.security.*;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Rachel Kobayashi

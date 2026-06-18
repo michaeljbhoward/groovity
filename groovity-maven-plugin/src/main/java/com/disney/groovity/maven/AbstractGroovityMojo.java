@@ -83,7 +83,7 @@ public abstract class AbstractGroovityMojo extends AbstractMojo {
 	
 	protected void validateFactory(Groovity factory) throws MojoFailureException{
 		Map<String, GroovityCompilerEvent> events = factory.getCompilerEvents();
-		Map<String,Throwable> errors = new LinkedHashMap<String, Throwable>();
+		Map<String,Throwable> errors = new LinkedHashMap<>();
 		for(Entry<String, GroovityCompilerEvent> entry: events.entrySet()){
 			if(entry.getValue().getError()!=null){
 				errors.put(entry.getKey(), entry.getValue().getError());
@@ -129,7 +129,7 @@ public abstract class AbstractGroovityMojo extends AbstractMojo {
 		else{
 			throw new MojoExecutionException("phase for class loader must be TEST or COMPILE, not "+scope);
 		}
-		Set<URL> projectClasspathList = new HashSet<URL>();
+		Set<URL> projectClasspathList = new HashSet<>();
 		for (String element : classpathElements) {
 			try {
 				projectClasspathList.add(new File(element).toURI().toURL());

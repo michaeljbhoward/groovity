@@ -46,7 +46,7 @@ public class StatusCodeErrorHandlerImpl implements GroovityErrorHandler {
 	private Map<Class<? extends Throwable>,Integer> statusCodes;
 	
 	public StatusCodeErrorHandlerImpl(){
-		this.statusCodes = new ConcurrentHashMap<Class<? extends Throwable>, Integer>();
+		this.statusCodes = new ConcurrentHashMap<>();
 		statusCodes.put(FileNotFoundException.class, 404);
 		statusCodes.put(ArgsException.class, 400);
 		statusCodes.put(TimeoutException.class, 504);

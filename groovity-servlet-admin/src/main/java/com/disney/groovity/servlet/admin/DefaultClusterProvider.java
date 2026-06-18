@@ -31,10 +31,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Alex Vigdor
  */
 public class DefaultClusterProvider implements ClusterProvider {
-	private ConcurrentHashMap<ClusterMember,ClusterMemberState> memberStates = new ConcurrentHashMap<ClusterMember, ClusterMemberState>();
+	private ConcurrentHashMap<ClusterMember,ClusterMemberState> memberStates = new ConcurrentHashMap<>();
 
 	public Iterable<ClusterMember> getMembers() {
-		ArrayList<ClusterMember> out = new ArrayList<ClusterMember>();
+		ArrayList<ClusterMember> out = new ArrayList<>();
 		for(ClusterMemberState memberState:memberStates.values()){
 			//check if member is active or left in the last hour
 			long oneHourAgo = System.currentTimeMillis()-3600000;

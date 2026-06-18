@@ -240,7 +240,7 @@ public class URIParcel<V> implements Callable<V> {
 	
 	protected static List<ContentStreamStore> getStreamLoaders(){
 		if(sortedStreamLoaders==null){
-			List<ContentStreamStore> csl = new ArrayList<ContentStreamStore>();
+			List<ContentStreamStore> csl = new ArrayList<>();
 			for(ContentStreamStore loader: streamStores){
 				csl.add(loader);
 			}
@@ -252,7 +252,7 @@ public class URIParcel<V> implements Callable<V> {
 	
 	protected static List<ContentValueHandler> getValueLoaders(){
 		if(sortedValueLoaders==null){
-			List<ContentValueHandler> csl = new ArrayList<ContentValueHandler>();
+			List<ContentValueHandler> csl = new ArrayList<>();
 			for(ContentValueHandler loader: valueHandlers){
 				csl.add(loader);
 			}

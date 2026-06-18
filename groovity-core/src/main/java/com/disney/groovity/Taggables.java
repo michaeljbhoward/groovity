@@ -48,7 +48,7 @@ import com.disney.groovity.doc.Tag;
 public class Taggables implements GroovityConstants{
 	private Groovity groovity;
 	
-	private Map<String, Taggable> groovyTags = new ConcurrentHashMap<String, Taggable>();
+	private Map<String, Taggable> groovyTags = new ConcurrentHashMap<>();
 	
 	public Taggables(){
 	}
@@ -68,7 +68,7 @@ public class Taggables implements GroovityConstants{
 	public void init(Groovity groovity){
 		this.groovity=groovity;
 		Taggable[] preRegisteredTags = groovyTags.values().toArray(new Taggable[0]);
-		groovyTags = new ConcurrentHashMap<String, Taggable>();
+		groovyTags = new ConcurrentHashMap<>();
 		ClassLoader tagLoader = groovity.getParentLoader();
 		if(tagLoader==null){
 			tagLoader = Thread.currentThread().getContextClassLoader();

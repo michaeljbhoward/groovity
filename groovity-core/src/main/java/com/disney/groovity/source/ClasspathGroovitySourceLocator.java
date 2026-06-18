@@ -25,7 +25,6 @@ package com.disney.groovity.source;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -59,7 +58,7 @@ public class ClasspathGroovitySourceLocator extends AbstractGroovitySourceLocato
 
 	@Override
 	public Iterator<GroovitySource> iterator() {
-		ArrayList<GroovitySource> sources = new ArrayList<GroovitySource>();
+		ArrayList<GroovitySource> sources = new ArrayList<>();
 		InputStream manifest = this.getClass().getResourceAsStream(directory.concat("groovity.mf"));
 		Scanner scanner = new Scanner(manifest); 
 		scanner.useDelimiter("[\r\n]+");

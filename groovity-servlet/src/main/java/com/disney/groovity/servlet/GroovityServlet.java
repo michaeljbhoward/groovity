@@ -35,7 +35,6 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ServiceLoader;
@@ -69,7 +68,6 @@ import com.disney.groovity.GroovityBuilder;
 import com.disney.groovity.conf.Configurator;
 import com.disney.groovity.servlet.GroovityScriptView.Processor;
 import com.disney.groovity.servlet.error.GroovityError;
-import com.disney.groovity.servlet.error.GroovityErrorHandler;
 import com.disney.groovity.servlet.error.GroovityErrorHandlerChain;
 import com.disney.groovity.servlet.error.GroovityErrorHandlerChainDecorator;
 import com.disney.groovity.source.GroovitySourceLocator;
@@ -317,7 +315,7 @@ public class GroovityServlet extends HttpServlet implements Servlet {
 				if (isNotBlank(sourceLocation)) {
 					// newlines separate multiple
 					String[] sources = sourceLocation.split(SOURCE_LOCATOR_SPLIT_REGEX);
-					ArrayList<URI> sourceURIs = new ArrayList<URI>(sources.length);
+					ArrayList<URI> sourceURIs = new ArrayList<>(sources.length);
 					for (String source : sources) {
 						if (isNotBlank(source)) {
 							sourceURIs.add(new URI(source));
@@ -326,7 +324,7 @@ public class GroovityServlet extends HttpServlet implements Servlet {
 					builder.setSourceLocations(sourceURIs);
 				} else if (isNotBlank(sourceLocator)) {
 					String[] sources = sourceLocator.split(SOURCE_LOCATOR_SPLIT_REGEX);
-					ArrayList<GroovitySourceLocator> sourceLocators = new ArrayList<GroovitySourceLocator>(sources.length);
+					ArrayList<GroovitySourceLocator> sourceLocators = new ArrayList<>(sources.length);
 					for (String source : sources) {
 						if (isNotBlank(source)) {
 							sourceLocators.add((GroovitySourceLocator) loadInstance(source));

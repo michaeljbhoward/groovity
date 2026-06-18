@@ -114,13 +114,13 @@ public abstract class AbstractConfigurator implements Configurator, GroovityCons
 	protected void doSetup(){
 		try{
 			Map<ConfigurationKey,String> newConf = loadConfiguration();
-			List<ConfigurationKey> newKeys = new ArrayList<ConfigurationKey>(newConf.keySet());
+			List<ConfigurationKey> newKeys = new ArrayList<>(newConf.keySet());
 			Collections.sort(newKeys, new Comparator<ConfigurationKey>() {
 				public int compare(ConfigurationKey o1, ConfigurationKey o2) {
 					return o2.getPath().length-o1.getPath().length;
 				}
 			});
-			loadedConfiguration = new ConcurrentHashMap<ConfigurationKey, String>(newConf);
+			loadedConfiguration = new ConcurrentHashMap<>(newConf);
 			loadedKeys = newKeys;
 		}
 		catch(Exception e){

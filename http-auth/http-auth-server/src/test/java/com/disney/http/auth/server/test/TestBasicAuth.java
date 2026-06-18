@@ -49,8 +49,8 @@ public class TestBasicAuth implements AuthConstants{
 	@Test
 	public void testBasic() throws Exception{
 		BasicVerifierImpl verifier = new BasicVerifierImpl();
-		Map<String,String> pmap = new HashMap<String,String>();
-		List<String> accessList = new ArrayList<String>();
+		Map<String,String> pmap = new HashMap<>();
+		List<String> accessList = new ArrayList<>();
 		ACLAccessControllerImpl acl = new ACLAccessControllerImpl();
 		acl.setAcl(accessList);
 		pmap.put("mykey", "mypass");

@@ -76,7 +76,7 @@ public class GroovityStandalone {
 			if(!groovityDirectory.exists() || !groovityDirectory.isDirectory()){
 				throw new FileNotFoundException("No directory found at "+groovityDirectory.getAbsolutePath());
 			}
-			List<URL> projectClasspathList = new ArrayList<URL>();
+			List<URL> projectClasspathList = new ArrayList<>();
 			File libDirectory = new File(workingDirectory,"lib");
 			if(libDirectory.exists() && libDirectory.isDirectory()){
 				File[] jars = libDirectory.listFiles(new FilenameFilter() {

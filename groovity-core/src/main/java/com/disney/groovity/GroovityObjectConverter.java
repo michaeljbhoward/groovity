@@ -80,7 +80,7 @@ public class GroovityObjectConverter {
 		//return coerced array
 		if(out.isArray()){
 			Class componentType = out.getComponentType();
-			ArrayList<Object> outObjs = new ArrayList<Object>();
+			ArrayList<Object> outObjs = new ArrayList<>();
 			for(Object i: in){
 				Object val = convert(i,componentType);
 				outObjs.add(val);

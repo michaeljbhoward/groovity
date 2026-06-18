@@ -290,7 +290,7 @@ public class GroovityBuilder {
 		groovity.setConfigurator(new MultiConfigurator(configurators));
 		final AtomicReference<BindingDecorator> bindingDecoratorRef = new AtomicReference<BindingDecorator>(bindingDecorator);
 		if(defaultBinding!=null){
-			bindingDecoratorRef.set(new BindingMapDecorator(new ConcurrentHashMap<String,Object>(defaultBinding),bindingDecoratorRef.get()));
+			bindingDecoratorRef.set(new BindingMapDecorator(new ConcurrentHashMap<>(defaultBinding),bindingDecoratorRef.get()));
 		}
 		ServiceLoader.load(BindingDecorator.class).forEach(decorator ->{
 			decorator.setChainedDecorator(bindingDecoratorRef.get());
@@ -307,7 +307,7 @@ public class GroovityBuilder {
 			httpClientBuilder.setMaxConnTotal(maxHttpConnTotal);
 		}
 		groovity.setHttpClient(httpClientBuilder.build());
-		List<GroovitySourceLocator> locators = new ArrayList<GroovitySourceLocator>();
+		List<GroovitySourceLocator> locators = new ArrayList<>();
 		if(sourceLocators!=null){
 			for(GroovitySourceLocator locator: sourceLocators){
 				locators.add(locator);

@@ -103,7 +103,7 @@ public class TestHttpSignature implements AuthConstants{
 		SignatureAuthorization signature = new SignatureAuthorization();
 		signature.setAlgorithm("rsa-sha256");
 		signature.setKeyId("rsa256key");
-		signature.setHeaders(new ArrayList<String>());
+		signature.setHeaders(new ArrayList<>());
 		signature.setSignature(new byte[0]);
 		request.addHeader("Authorization", "Signature "+signature.toString());
 		//SECOND TEST: missing REQUEST_TARGET

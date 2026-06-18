@@ -94,7 +94,7 @@ public class VerifierFactory {
 	
 	@SuppressWarnings("rawtypes")
 	public Verifier createVerifier(List auths, Class<Script> scriptClass) throws InstantiationException, IllegalAccessException, ClassNotFoundException, MalformedURLException, URISyntaxException, NoSuchAlgorithmException, InvalidKeySpecException, CertificateException{
-		ArrayList<Verifier> verifiers = new ArrayList<Verifier>(auths.size());
+		ArrayList<Verifier> verifiers = new ArrayList<>(auths.size());
 		for(Object auth:auths){
 			if(auth instanceof Map){
 				Map conf = (Map) auth;
@@ -157,7 +157,7 @@ public class VerifierFactory {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void processCommon(AbstractVerifier verifier, Map map, Class scriptClass) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
-		List<AccessController> accessControllers = new ArrayList<AccessController>();
+		List<AccessController> accessControllers = new ArrayList<>();
 		String realm = resolve(map,"realm",String.class);
 		if(realm!=null){
 			verifier.setRealm(realm);
@@ -243,7 +243,7 @@ public class VerifierFactory {
 	private SignatureVerifierImpl processSignature(Map signature, Class<Script> scriptClass) throws InstantiationException, IllegalAccessException, ClassNotFoundException, MalformedURLException, URISyntaxException, NoSuchAlgorithmException, InvalidKeySpecException, CertificateException{
 		SignatureVerifierImpl verifier = new SignatureVerifierImpl();
 		processCommon(verifier, signature, scriptClass);
-		List<KeyChain> keyChains = new ArrayList<KeyChain>();
+		List<KeyChain> keyChains = new ArrayList<>();
 		List headers = (List) signature.get("headers");
 		if(headers!=null){
 			verifier.setRequiredHeaders(headers);
@@ -255,7 +255,7 @@ public class VerifierFactory {
 		Map<Object,Map> keys = (Map) signature.get("keys");
 		if(keys!=null){
 			//we need to convert to proper Key objects
-			Map<String,Key> realKeys = new HashMap<String, Key>();
+			Map<String,Key> realKeys = new HashMap<>();
 			for(Entry<Object,Map> entry: keys.entrySet()){
 				String algorithm = (String) entry.getValue().get("algorithm");
 				Object secret = entry.getValue().get("key");
@@ -440,7 +440,7 @@ public class VerifierFactory {
 	private BasicVerifierImpl processBasic(Map basic, Class scriptClass) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		BasicVerifierImpl verifier = new BasicVerifierImpl();
 		processCommon(verifier, basic, scriptClass);
-		List<PasswordChecker> passwordCheckers = new ArrayList<PasswordChecker>();
+		List<PasswordChecker> passwordCheckers = new ArrayList<>();
 		Map passwords = (Map) basic.get("passwords");
 		if(passwords!=null){
 			passwordCheckers.add(new MapPasswordChecker(passwords));
@@ -501,7 +501,7 @@ public class VerifierFactory {
 	private DigestVerifierImpl processDigest(Map digest, Class<Script> scriptClass) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		DigestVerifierImpl verifier = new DigestVerifierImpl();
 		processCommon(verifier, digest, scriptClass);
-		ArrayList<PasswordDigester> passwordDigesters= new ArrayList<PasswordDigester>();
+		ArrayList<PasswordDigester> passwordDigesters= new ArrayList<>();
 		String nonceSecret = (String) digest.get("nonceSecret");
 		if(nonceSecret!=null){
 			verifier.setNonceSecret(nonceSecret);

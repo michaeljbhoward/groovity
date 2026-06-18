@@ -24,7 +24,6 @@
 package com.disney.groovity.source;
 
 import java.io.CharArrayWriter;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;

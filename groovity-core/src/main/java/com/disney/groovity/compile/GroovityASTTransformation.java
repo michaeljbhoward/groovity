@@ -525,7 +525,7 @@ public class GroovityASTTransformation implements ASTTransformation, Opcodes, Gr
 					dependencyExpression.addExpression(new ConstantExpression(dep));
 				}
 				//Store pointers to all dependencies to help control load order
-				final FieldNode initDependenciesFieldNode = new FieldNode("initDependencies",ACC_PUBLIC | ACC_STATIC | ACC_FINAL,new ClassNode(new ArrayList<String>().getClass()),scriptClassNode,dependencyExpression);
+				final FieldNode initDependenciesFieldNode = new FieldNode("initDependencies",ACC_PUBLIC | ACC_STATIC | ACC_FINAL,new ClassNode(new ArrayList<>().getClass()),scriptClassNode,dependencyExpression);
 				scriptClassNode.addField(initDependenciesFieldNode);
 			}
 		}

@@ -268,7 +268,7 @@ public abstract class AbstractMultivaluedMap<K, V> implements MultivaluedMap<K, 
     protected final List<V> getValues(K key) {
         List<V> l = store.get(key);
         if (l == null) {
-            l = new LinkedList<V>();
+            l = new LinkedList<>();
             store.put(key, l);
         }
         return l;

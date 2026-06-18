@@ -41,7 +41,7 @@ import java.util.concurrent.TimeUnit;
  * @author Alex Vigdor
  */
 public class SoftCacheValueStore implements CacheValueStore {
-	private ConcurrentHashMap<Object, SoftCacheReference> backingMap = new ConcurrentHashMap<Object, SoftCacheReference>();
+	private ConcurrentHashMap<Object, SoftCacheReference> backingMap = new ConcurrentHashMap<>();
 	private int ttl =-1;
 	private int max = -1;
 	private ReferenceQueue<CacheValue> queue;
@@ -75,7 +75,7 @@ public class SoftCacheValueStore implements CacheValueStore {
 					}
 				}
 				if(max>0){
-					List<SoftCacheReference> values = new ArrayList<SoftCacheReference>(backingMap.values());
+					List<SoftCacheReference> values = new ArrayList<>(backingMap.values());
 					if(values.size()>max){
 						//System.out.println("Pruning soft cache from "+values.size()+" to "+max);
 						Collections.sort(values);

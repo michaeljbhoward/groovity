@@ -42,7 +42,7 @@ public class GroovitySourceTransformer {
 	static Pattern expressionStart = Pattern.compile("(?<!\\\\)\\$\\{");
 	public static TransformedSource transformSource(String str){
 		StringBuilder output = new StringBuilder();
-		Map<Integer,Integer> sourceLineNumbers = new HashMap<Integer, Integer>();
+		Map<Integer,Integer> sourceLineNumbers = new HashMap<>();
 		int transformedSourceLineNumber =1;
 		int sourceLineNumber = 1;
 		Scanner scanner = new Scanner(str);
@@ -59,7 +59,7 @@ public class GroovitySourceTransformer {
 				output.append("new ClosureWritable({ ");
 				Matcher tagMatcher = tagPattern.matcher(segment);
 				int lastPos = 0;
-				ArrayList<String> subsegments = new ArrayList<String>();
+				ArrayList<String> subsegments = new ArrayList<>();
 				if(tagMatcher.find()){
 					tagMatcher.reset();
 					while(tagMatcher.find()){
