@@ -89,7 +89,7 @@ public class Closure implements Taggable{
 		}
 		final List argNames;
 		if(args==null){
-			argNames = new ArrayList<String>();
+			argNames = new ArrayList<>();
 		}
 		else if(args instanceof List){
 			argNames = (List)args;

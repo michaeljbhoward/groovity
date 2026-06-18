@@ -85,7 +85,7 @@ public class Cache {
 								@SuppressWarnings("rawtypes")
 								public void run() {
 									List<Object> keys = new ArrayList<>(refreshSet);
-									Map<Object,Object> valueMap = new HashMap<Object,Object>(keys.size()*2);
+									Map<Object,Object> valueMap = new HashMap<>(keys.size()*2);
 									LinkedHashMap<String, Object> variables = new LinkedHashMap<>();
 									Binding safeBinding = new Binding(variables);
 									if(bindingDecorator!=null){
@@ -156,7 +156,7 @@ public class Cache {
 	}
 	
 	public Map<Object,Object> get(Iterable<Object> keys, int refresh, int ttl){
-		Map<Object,CacheValue> found = new LinkedHashMap<Object,CacheValue>();
+		Map<Object,CacheValue> found = new LinkedHashMap<>();
 		Map<Object,CompletableFuture<CacheValue>> loadKeys = null;
 		for(Object key: keys){
 			found.put(key, null);

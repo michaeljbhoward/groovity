@@ -125,7 +125,7 @@ import groovy.lang.Closure;
 )
 public class Signature implements Taggable {
 	final static String SIGNATURE_BINDING = INTERNAL_BINDING_PREFIX+"Optional.Signature";
-	ConcurrentHashMap<String, KeyChainKeyLoader> keystores = new ConcurrentHashMap<String, KeyChainKeyLoader>();
+	ConcurrentHashMap<String, KeyChainKeyLoader> keystores = new ConcurrentHashMap<>();
 
 	@SuppressWarnings({"rawtypes","unchecked"})
 	public static void acceptSigner(Map variables){

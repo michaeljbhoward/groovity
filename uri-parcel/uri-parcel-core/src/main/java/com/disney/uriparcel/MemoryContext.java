@@ -33,7 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class MemoryContext {
 	public static final String MEMORY_PROTOCOL = "mem";
-	private static final ConcurrentHashMap<URI, MemoryPayload> context = new ConcurrentHashMap<URI, MemoryPayload>();
+	private static final ConcurrentHashMap<URI, MemoryPayload> context = new ConcurrentHashMap<>();
 	public static void put(URI uri,MemoryPayload value){
 		checkUri(uri);
 		context.put(uri, value);

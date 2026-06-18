@@ -64,9 +64,9 @@ import com.disney.groovity.websocket.WebSocket;
  */
 public class GroovityScriptViewFactory{
 	private static final Logger logger = Logger.getLogger(GroovityScriptViewFactory.class.getName());
-	private final ConcurrentHashMap<String, GroovityScriptView> views = new ConcurrentHashMap<String, GroovityScriptView>();
+	private final ConcurrentHashMap<String, GroovityScriptView> views = new ConcurrentHashMap<>();
 	private final ConcurrentSkipListMap<PathTemplateMethods, GroovityScriptView> viewPaths = new ConcurrentSkipListMap<PathTemplateMethods, GroovityScriptView>();
-	private final ConcurrentHashMap<String, GroovityScriptView> sockets = new ConcurrentHashMap<String, GroovityScriptView>();
+	private final ConcurrentHashMap<String, GroovityScriptView> sockets = new ConcurrentHashMap<>();
 	private PathView[] pathViews;
 	private Groovity factory;
 	
@@ -145,7 +145,7 @@ public class GroovityScriptViewFactory{
 				}
 				else{
 					if(possibleMethods==null){
-						possibleMethods = new HashSet<String>();
+						possibleMethods = new HashSet<>();
 					}
 					possibleMethods.addAll(supportedMethods);
 				}

@@ -59,7 +59,6 @@ import com.disney.groovity.GroovityObjectConverter;
 import com.disney.groovity.GroovityPhase;
 import com.disney.groovity.compile.GroovityClassLoader;
 import com.disney.groovity.conf.Configurator;
-import com.disney.groovity.source.GroovitySourceLocator;
 
 import groovy.lang.Binding;
 import groovy.lang.Script;

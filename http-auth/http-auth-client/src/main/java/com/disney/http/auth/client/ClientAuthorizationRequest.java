@@ -74,7 +74,7 @@ public class ClientAuthorizationRequest implements AuthorizationRequest {
     @Override
     public List<String> getHeaders(String headerName) {
         Header[] headers = httpRequest.getHeaders(headerName);
-        List<String> headerValues = new ArrayList<String>(headers.length);
+        List<String> headerValues = new ArrayList<>(headers.length);
         for (int i = 0; i < headers.length; i++) {
             headerValues.add(headers[i].getValue());
         }

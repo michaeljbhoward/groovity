@@ -288,7 +288,7 @@ public class TestSignatureAuth implements AuthConstants {
         signer.setAlgorithm("rsa-sha256");
         location = "target/testKeytool.store";
         
-        Map<String,Object> config = new HashMap<String,Object>();
+        Map<String,Object> config = new HashMap<>();
     	config.put(KeyStoreValueHandler.KEYSTORE_PASSWORD, "rachel");
     	config.put(KeyStoreValueHandler.KEYSTORE_TYPE, "JCEKS");
     	

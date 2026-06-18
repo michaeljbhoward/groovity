@@ -23,8 +23,6 @@
  *******************************************************************************/
 package com.disney.groovity.servlet.cors;
 
-import java.net.URI;
-
 /**
  * Specification for Origin matching in CORS requests.  A CORSOrigin MUST specify a domain name;
  * it MAY specify a scheme (if not http or https will be supported), and it MAY specify a port (otherwise any port is supported).

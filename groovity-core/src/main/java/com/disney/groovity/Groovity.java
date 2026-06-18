@@ -154,13 +154,13 @@ public class Groovity implements GroovityConstants{
 	
 	private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 	
-	private final ConcurrentHashMap<String, Class<Script>> scripts = new ConcurrentHashMap<String, Class<Script>>();
-	private final ConcurrentHashMap<String, Long> scriptDates = new ConcurrentHashMap<String, Long>();
-	private final ConcurrentHashMap<String, GroovityCompilerEvent> compileEvents = new ConcurrentHashMap<String, GroovityCompilerEvent>();
-	private final ConcurrentHashMap<String, Class<Script>> embeddedScripts = new ConcurrentHashMap<String, Class<Script>>();
+	private final ConcurrentHashMap<String, Class<Script>> scripts = new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<String, Long> scriptDates = new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<String, GroovityCompilerEvent> compileEvents = new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<String, Class<Script>> embeddedScripts = new ConcurrentHashMap<>();
 	private File jarDirectory = null;
 	private ClassLoader parentLoader;
-	private List<GroovityObserver> observers = new ArrayList<GroovityObserver>();
+	private List<GroovityObserver> observers = new ArrayList<>();
 	private GroovitySourceLocator[] sourceLocators;
 	private EnumSet<GroovityPhase> sourcePhases;
 	private EnumSet<GroovityPhase> jarPhases;
@@ -235,7 +235,7 @@ public class Groovity implements GroovityConstants{
 	
 	public Map<String, Long> getCompiledStatus()
 	{
-		Map<String,Long> status = new HashMap<String, Long>();
+		Map<String,Long> status = new HashMap<>();
 		for(Entry<String,Long> entry:scriptDates.entrySet()){
 			Class<Script> scriptClass = scripts.get(entry.getKey());
 			if(scriptClass!=null){
@@ -563,9 +563,9 @@ public class Groovity implements GroovityConstants{
 		if(inCompile.compareAndSet(false, true)){
 			try{
 				compileEvents.clear();
-				List<GroovitySource> sources = new ArrayList<GroovitySource>();
+				List<GroovitySource> sources = new ArrayList<>();
 				//track existing views so we can keep track of files that may have since been deleted
-				HashSet<String> oldViews = new HashSet<String>(((Map<String, Class<Script>>)scripts).keySet());
+				HashSet<String> oldViews = new HashSet<>(((Map<String, Class<Script>>)scripts).keySet());
 				for(GroovitySourceLocator sourceLocator: sourceLocators){
 					for(GroovitySource source: sourceLocator){
 						try {
@@ -643,7 +643,7 @@ public class Groovity implements GroovityConstants{
 			return deps;
 		} catch (Exception e) {
 		} 
-		return new ArrayList<String>();
+		return new ArrayList<>();
 	}
 	
 	protected void configureAll(){
@@ -799,8 +799,8 @@ public class Groovity implements GroovityConstants{
 	}
 	//for first-time load ONLY
 	protected void loadClasses(boolean init) throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-		HashMap<String,Collection<String>> newScriptDependencies = new HashMap<String, Collection<String>>();
-		Map<String,Boolean> newScriptInits = new HashMap<String, Boolean>();
+		HashMap<String,Collection<String>> newScriptDependencies = new HashMap<>();
+		Map<String,Boolean> newScriptInits = new HashMap<>();
 		//first, look on classpath for packaged groovity scripts
 		ClassLoader loader = parentLoader;
 		if(loader==null){
@@ -1019,7 +1019,7 @@ public class Groovity implements GroovityConstants{
 	}
 
 	protected void loadClasses(String sourcePath, InputStream jarStream, long modTime, boolean embedded, HashMap<String,Collection<String>> newScriptDependencies, Map<String,Boolean> newScriptInits, boolean projectJar) throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-		ArrayList<String> dependencies = new ArrayList<String>();
+		ArrayList<String> dependencies = new ArrayList<>();
 		CompilerConfiguration compilerConfiguration = createCompilerConfiguration(null,dependencies);
 		GroovyClass[] classes = loadGroovyClasses(jarStream);
 		//a classloader only gets the traits that are available when it is created, so we make a copy
@@ -1067,7 +1067,7 @@ public class Groovity implements GroovityConstants{
 		if(inCompile.compareAndSet(false, true)){
 			try{
 				compileEvents.clear();
-				List<GroovitySource> sources = new ArrayList<GroovitySource>();
+				List<GroovitySource> sources = new ArrayList<>();
 				for(int i=0;i<sourcePaths.size();i++)
 				{
 					String path = sourcePaths.get(i);
@@ -1124,9 +1124,9 @@ public class Groovity implements GroovityConstants{
 	}
 	
 	private List<String> sortDependencies(final Map<String,Collection<String>> scriptDependencies,  Map<String,Boolean> scriptInits){
-		ArrayList<String> scriptNames = new ArrayList<String>();
+		ArrayList<String> scriptNames = new ArrayList<>();
 		scriptNames.addAll(scriptDependencies.keySet());
-		ArrayList<String> rval = new ArrayList<String>();
+		ArrayList<String> rval = new ArrayList<>();
 		Iterator<String> scriptNameIterator = scriptNames.iterator();
 		//first load up all scripts with no dependencies
 		while(scriptNameIterator.hasNext()){
@@ -1188,11 +1188,11 @@ public class Groovity implements GroovityConstants{
 	@SuppressWarnings("rawtypes") 
 	protected void compile(boolean force, boolean init, ConcurrentHashMap<String, Class> compilerTraits, GroovitySource... sources){
 		//take multiple sources and compile as a set, only initing() classes once all are loaded
-		HashMap<String, Class<Script>> newScripts = new HashMap<String, Class<Script>>();
-		HashMap<String, Long> newScriptDates = new HashMap<String, Long>();
-		HashMap<String, File> deletedScripts = new HashMap<String, File>();
-		HashMap<String, Collection<String>> scriptDependencies = new HashMap<String, Collection<String>>();
-		HashMap<String, Boolean> scriptInits = new HashMap<String, Boolean>();
+		HashMap<String, Class<Script>> newScripts = new HashMap<>();
+		HashMap<String, Long> newScriptDates = new HashMap<>();
+		HashMap<String, File> deletedScripts = new HashMap<>();
+		HashMap<String, Collection<String>> scriptDependencies = new HashMap<>();
+		HashMap<String, Boolean> scriptInits = new HashMap<>();
 		List<GroovitySource> traitSources = new ArrayList<>();
 		List<GroovitySource> plainSources = new ArrayList<>();
 		for(GroovitySource source: sources) {
@@ -1211,7 +1211,7 @@ public class Groovity implements GroovityConstants{
 		if(!plainSources.isEmpty()) {
 			compileLoop(newScripts, newScriptDates, deletedScripts, scriptDependencies, scriptInits, force, init, 0, compilerTraits, plainSources.toArray(new GroovitySource[0]));
 		}
-		List<Class<Script>> toDestroy = new ArrayList<Class<Script>>();
+		List<Class<Script>> toDestroy = new ArrayList<>();
 		HashSet<String> sourceNames = new HashSet<>();
 		for(GroovitySource source: sources) {
 			sourceNames.add(getScriptName(source.getPath()));
@@ -1276,7 +1276,7 @@ public class Groovity implements GroovityConstants{
 				});
 			}
 		}
-		Map<String,Throwable> errors = new LinkedHashMap<String, Throwable>();
+		Map<String,Throwable> errors = new LinkedHashMap<>();
 		for(Entry<String, GroovityCompilerEvent> entry: getCompilerEvents().entrySet()){
 			if(entry.getValue().getError()!=null){
 				if(sourceNames.contains(entry.getKey())) {
@@ -1345,7 +1345,7 @@ public class Groovity implements GroovityConstants{
 
 					//groovy script compiler
 					long time1=System.currentTimeMillis();
-					ArrayList<String> dependencies = new ArrayList<String>();
+					ArrayList<String> dependencies = new ArrayList<>();
 					CompilerConfiguration compilerConfiguration = createCompilerConfiguration(transformed!=null?transformed.sourceLineNumbers:null,dependencies);
 					//a classloader only gets the traits that are available when it is created, so we make a copy
 					ConcurrentHashMap<String, Class> traitsCopy = new ConcurrentHashMap<>(compilerTraits);
@@ -1454,7 +1454,7 @@ public class Groovity implements GroovityConstants{
 			File f = getClassesFile(sourceFile);
 			f.mkdirs();
 			f.delete();
-			HashSet<String> directories = new HashSet<String>();
+			HashSet<String> directories = new HashSet<>();
 			FileOutputStream fos = new FileOutputStream(f);
 			try{
 				Manifest manifest = new Manifest();
@@ -1496,7 +1496,7 @@ public class Groovity implements GroovityConstants{
 	}
 	protected GroovyClass[] loadGroovyClasses(InputStream jarStream) throws IOException{
 		//System.out.println("Loading classes from "+f);
-		ArrayList<GroovyClass> out = new ArrayList<GroovyClass>();
+		ArrayList<GroovyClass> out = new ArrayList<>();
 		byte[] buf = new byte[8192];
 		JarInputStream jar = new JarInputStream(jarStream);
 		try{
@@ -1590,9 +1590,9 @@ public class Groovity implements GroovityConstants{
 	}
 	
 	public List<GroovitySource> getChangedSources(){
-		ArrayList<GroovitySource> changedSources = new ArrayList<GroovitySource>();
+		ArrayList<GroovitySource> changedSources = new ArrayList<>();
 		if(sourceLocators!=null){
-			ArrayList<String> currentScripts = new ArrayList<String>(((Map<String, Long>)scriptDates).keySet());
+			ArrayList<String> currentScripts = new ArrayList<>(((Map<String, Long>)scriptDates).keySet());
 			for(GroovitySourceLocator sourceLocator:sourceLocators){
 				for(GroovitySource source: sourceLocator){
 					String key = fixCase(source.getPath());
@@ -1756,7 +1756,7 @@ public class Groovity implements GroovityConstants{
 				if(className.startsWith("_")){
 					className = className.substring(1);
 				}
-				HashSet<Class> publicClasses = new HashSet<Class>();
+				HashSet<Class> publicClasses = new HashSet<>();
 				LinkedHashMap libModel = new LinkedHashMap();
 				libModel.put(NAME, className);
 				libModel.put(PATH,sourcePath);

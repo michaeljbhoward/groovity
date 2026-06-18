@@ -72,7 +72,7 @@ public class UriTemplateParser {
                 ')', ']', ',', '>',
                 '*', '+', '|'};
 
-        Set<Character> s = new HashSet<Character>(reserved.length);
+        Set<Character> s = new HashSet<>(reserved.length);
         for (char c : reserved) {
             s.add(c);
         }
@@ -89,9 +89,9 @@ public class UriTemplateParser {
     private final StringBuffer normalizedTemplate = new StringBuffer();
     private final StringBuffer literalCharactersBuffer = new StringBuffer();
     private final Pattern pattern;
-    private final List<String> names = new ArrayList<String>();
-    private final List<Integer> groupCounts = new ArrayList<Integer>();
-    private final Map<String, Pattern> nameToPattern = new HashMap<String, Pattern>();
+    private final List<String> names = new ArrayList<>();
+    private final List<Integer> groupCounts = new ArrayList<>();
+    private final Map<String, Pattern> nameToPattern = new HashMap<>();
     private int numOfExplicitRegexes;
     private int skipGroup;
 

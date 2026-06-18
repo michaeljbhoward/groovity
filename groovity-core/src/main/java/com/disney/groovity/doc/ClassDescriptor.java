@@ -78,7 +78,7 @@ public class ClassDescriptor {
 				}
 			}
 		}
-		methods = new ArrayList<Method>();
+		methods = new ArrayList<>();
 		Method[] dms = clazz.getDeclaredMethods();
 		for(Method m:dms){
 			if(!m.isSynthetic() && !m.isBridge()){

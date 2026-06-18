@@ -82,7 +82,7 @@ public class GroovityClassLoader extends GroovyClassLoader implements GroovityCo
 	private ConcurrentHashMap<String,Cache> caches;
 	private BindingDecorator bindingDecorator;
 	private ArgsResolver argsResolver;
-	private List<ObjectName> mbeanNames = new ArrayList<ObjectName>();
+	private List<ObjectName> mbeanNames = new ArrayList<>();
 	private ScheduledExecutorService scheduler;
 	private Logger scriptLogger;
 	private Class<Script> scriptClass;
@@ -103,7 +103,7 @@ public class GroovityClassLoader extends GroovyClassLoader implements GroovityCo
 		this.helper=new ScriptHelper(groovity, this);
 		this.sourcePath=sourcePath;
 		this.scriptName = sourcePath.substring(0,sourcePath.length()-5);
-		this.caches = new ConcurrentHashMap<String, Cache>();
+		this.caches = new ConcurrentHashMap<>();
 		this.bindingDecorator=groovity.getBindingDecorator();
 		this.scheduler=scheduler;
 		this.scriptLogger = Logger.getLogger(sourcePath);
@@ -204,7 +204,7 @@ public class GroovityClassLoader extends GroovyClassLoader implements GroovityCo
 	}
 	
 	private synchronized ConcurrentHashMap<String, Object> prepareConfiguration(){
-		ConcurrentHashMap<String,Object> configuration = new ConcurrentHashMap<String, Object>();
+		ConcurrentHashMap<String,Object> configuration = new ConcurrentHashMap<>();
 		//sanity check conf values
 		for (Entry<String, Object> entry: originalConfiguration.entrySet()){
 			Object val = entry.getValue();

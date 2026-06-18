@@ -303,7 +303,7 @@ public class Http implements Taggable {
 			try {
 				builder = new URIBuilder(url.toString());
 				bind(context,Uri.CURRENT_URI_BUILDER, builder);
-				headers = new ArrayList<Header>();
+				headers = new ArrayList<>();
 				bind(context,com.disney.groovity.tags.Header.CURRENT_LIST_FOR_HEADERS, headers);
 				Credentials.acceptCredentials(variables);
 				Signature.acceptSigner(variables);
@@ -424,7 +424,7 @@ public class Http implements Taggable {
 								|| (targetType==null && (data instanceof Map || data instanceof List))){
 							//key/value pairs, accept a map, a list of maps, or a list of NameValuePairs
 							Iterator source = data instanceof Map? ((Map)data).entrySet().iterator() : ((List)data).iterator();
-							ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+							ArrayList<NameValuePair> pairs = new ArrayList<>();
 							while(source.hasNext()){
 								Object next = source.next();
 								if(next instanceof Map.Entry){

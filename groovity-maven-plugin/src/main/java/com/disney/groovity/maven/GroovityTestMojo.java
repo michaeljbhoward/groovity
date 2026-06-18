@@ -154,7 +154,7 @@ public class GroovityTestMojo extends AbstractGroovityMojo {
 			GroovityServletContainer container = builder.build();
 			container.start();
 			Groovity groovity = container.getGroovity();
-			ArrayList<String> appSources = new ArrayList<String>();
+			ArrayList<String> appSources = new ArrayList<>();
 			try {
 				if(failOnError) {
 					validateFactory(groovity);
@@ -289,7 +289,7 @@ public class GroovityTestMojo extends AbstractGroovityMojo {
 				runnable = true;
 			}
 			this.label=label;
-			methods = new TreeMap<String, Boolean>();
+			methods = new TreeMap<>();
 			Method[] dm = scriptClass.getDeclaredMethods();
 			for (Method m : dm) {
 				if (m.getAnnotation(GatherStatistics.class)!=null) {
@@ -315,7 +315,7 @@ public class GroovityTestMojo extends AbstractGroovityMojo {
 		}
 
 		public List<String> getCoveredMethods() {
-			ArrayList<String> covered = new ArrayList<String>();
+			ArrayList<String> covered = new ArrayList<>();
 			for (Entry<String, Boolean> entry : methods.entrySet()) {
 				if (entry.getValue().booleanValue()) {
 					covered.add(entry.getKey());
@@ -325,7 +325,7 @@ public class GroovityTestMojo extends AbstractGroovityMojo {
 		}
 
 		public List<String> getUncoveredMethods() {
-			ArrayList<String> uncovered = new ArrayList<String>();
+			ArrayList<String> uncovered = new ArrayList<>();
 			for (Entry<String, Boolean> entry : methods.entrySet()) {
 				if (!entry.getValue().booleanValue()) {
 					uncovered.add(entry.getKey());

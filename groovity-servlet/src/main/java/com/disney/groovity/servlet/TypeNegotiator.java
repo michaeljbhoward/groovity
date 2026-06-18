@@ -81,7 +81,7 @@ public final class TypeNegotiator
     {
         String[] parts = mimeType.split(";");
         ParseResults results = new ParseResults();
-        results.params = new HashMap<String, String>();
+        results.params = new HashMap<>();
 
         for (int i = 1; i < parts.length; ++i)
         {
@@ -242,7 +242,7 @@ public final class TypeNegotiator
      */
     public static float quality(int pos, String mimeType, String ranges)
     {
-        List<ParseResults> results = new LinkedList<ParseResults>();
+        List<ParseResults> results = new LinkedList<>();
         for (String r : ranges.split(","))
             results.add(parseMediaRange(r));
         return qualityParsed(pos, mimeType, results);
@@ -263,8 +263,8 @@ public final class TypeNegotiator
      */
     public static String bestMatch(List<String> supported, String header)
     {
-        List<ParseResults> parseResults = new LinkedList<ParseResults>();
-        List<FitnessAndQuality> weightedMatches = new LinkedList<FitnessAndQuality>();
+        List<ParseResults> parseResults = new LinkedList<>();
+        List<FitnessAndQuality> weightedMatches = new LinkedList<>();
         for (String r : header.split(","))
             parseResults.add(parseMediaRange(r));
 

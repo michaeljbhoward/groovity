@@ -52,7 +52,7 @@ public class CORSFactory {
 			// ORIGINS
 			List origins = resolve(configMap,"origins",List.class);
 			if(origins!=null && origins.size()>0){
-				List<CORSOrigin> corsOrigins = new ArrayList<CORSOrigin>();
+				List<CORSOrigin> corsOrigins = new ArrayList<>();
 				for(Object or: origins){
 					String ors = or.toString();
 					if("*".equals(ors)){
@@ -70,7 +70,7 @@ public class CORSFactory {
 			//METHODS
 			List methods = resolve(configMap,"methods",List.class);
 			if(methods!=null && methods.size()>0){
-				List<String> corsMethods = new ArrayList<String>();
+				List<String> corsMethods = new ArrayList<>();
 				for(Object m: methods){
 					corsMethods.add(m.toString());
 				}
@@ -82,7 +82,7 @@ public class CORSFactory {
 			//HEADERS
 			List headers = resolve(configMap,"headers",List.class);
 			if(headers!=null && headers.size()>0){
-				List<String> corsHeaders = new ArrayList<String>();
+				List<String> corsHeaders = new ArrayList<>();
 				for(Object h: headers){
 					String hs = h.toString();
 					if("*".equals(hs)){
@@ -100,14 +100,14 @@ public class CORSFactory {
 			//EXPOSED
 			List exposed = resolve(configMap,"exposed",List.class);
 			if(exposed!=null && exposed.size()>0){
-				List<String> corsExposed = new ArrayList<String>();
+				List<String> corsExposed = new ArrayList<>();
 				for(Object e: exposed){
 					corsExposed.add(e.toString());
 				}
 				config.setExposedHeaders(corsExposed);
 			}
 			else{
-				config.setExposedHeaders(new ArrayList<String>(0));
+				config.setExposedHeaders(new ArrayList<>(0));
 			}
 			//CREDENTIALS
 			Object credentials = resolve(configMap,"credentials",Object.class);

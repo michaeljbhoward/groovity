@@ -221,7 +221,7 @@ public class Ws implements Taggable, AuthConstants{
 		try {
 			builder = new URIBuilder(url.toString());
 			bind(context,Uri.CURRENT_URI_BUILDER, builder);
-			headers = new ArrayList<Header>();
+			headers = new ArrayList<>();
 			bind(context,com.disney.groovity.tags.Header.CURRENT_LIST_FOR_HEADERS, headers);
 			Credentials.acceptCredentials(variables);
 			Signature.acceptSigner(variables);

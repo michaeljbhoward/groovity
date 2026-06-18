@@ -45,7 +45,7 @@ import com.disney.groovity.model.ModelConsumer;
  */
 public class GroovityStatistics implements GroovityConstants{
 	private static Log log = LogFactory.getLog(GroovityStatistics.class);
-	private static final ConcurrentHashMap<Object, Statistics> timingMap = new ConcurrentHashMap<Object, Statistics>();
+	private static final ConcurrentHashMap<Object, Statistics> timingMap = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<Thread,CurrentExecution> threadStackMap = new ConcurrentHashMap<>();
 	public static long lastReset=System.currentTimeMillis();
 	private static final long stuckThreadTimeout=60000000000l;
@@ -70,7 +70,7 @@ public class GroovityStatistics implements GroovityConstants{
 	 */
 	public static Iterable<GroovityThreadProfile> getThreadProfiles(){
 		long curTime = System.nanoTime();
-		ArrayList<GroovityThreadProfile> profiles = new ArrayList<GroovityThreadProfile>();
+		ArrayList<GroovityThreadProfile> profiles = new ArrayList<>();
 		for(Entry<Thread, CurrentExecution> entry: threadStackMap.entrySet()){
 			final GroovityThreadProfile profile = new GroovityThreadProfile();
 			profile.setName(entry.getKey().getName());
@@ -175,7 +175,7 @@ public class GroovityStatistics implements GroovityConstants{
 		public final AtomicLong grossTime = new AtomicLong();
 		public final AtomicLong netTime = new AtomicLong();
 		public final AtomicLong maxTime = new AtomicLong();
-		public final ConcurrentHashMap<Object,AtomicLong> callees = new ConcurrentHashMap<Object,AtomicLong>();
+		public final ConcurrentHashMap<Object,AtomicLong> callees = new ConcurrentHashMap<>();
 		public final Object key;
 		public Statistics(Object key){
 			this.key=key;
@@ -228,7 +228,7 @@ public class GroovityStatistics implements GroovityConstants{
 	}
 
 	public static List<Statistics> getStatistics(){
-		ArrayList<Statistics> list = new ArrayList<Statistics>(timingMap.values());
+		ArrayList<Statistics> list = new ArrayList<>(timingMap.values());
 		Collections.sort(list);
 		return list;
 	}

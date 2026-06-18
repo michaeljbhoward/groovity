@@ -45,7 +45,6 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigInteger;
-import java.net.URI;
 import java.security.Key;
 import java.security.KeyPair;
 import java.security.KeyStore;
@@ -98,7 +97,7 @@ public class TestKeyUtils {
 
         // test retrieval of KeyStore
     
-    	Map<String,Object> config = new HashMap<String,Object>();
+    	Map<String,Object> config = new HashMap<>();
     	config.put(KeyStoreValueHandler.KEYSTORE_PASSWORD, privatePassword);
     	config.put(KeyStoreValueHandler.KEYSTORE_TYPE, "JCEKS");
     	URIParcel<KeyStore> parcel = new URIParcel<KeyStore>(KeyStore.class,privateKeyStore.toURI(),config);
@@ -135,7 +134,7 @@ public class TestKeyUtils {
         writePrivateKeystoreToFile(keyPairForFile,location, "test", "rachel");
 
         // load from file
-        config = new HashMap<String,Object>();
+        config = new HashMap<>();
     	config.put(KeyStoreValueHandler.KEYSTORE_PASSWORD, "rachel");
     	config.put(KeyStoreValueHandler.KEYSTORE_TYPE, "JCEKS");
     	URIParcel<KeyStore> ksParcel = new URIParcel<KeyStore>(KeyStore.class,new File(location).toURI(),config);

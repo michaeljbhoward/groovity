@@ -51,7 +51,7 @@ public abstract class AbstractGroovitySourceLocator implements GroovitySourceLoc
 	public abstract Iterator<GroovitySource> iterator();
 	
 	public void init(){
-		cachedSources = new HashMap<String, GroovitySource>();
+		cachedSources = new HashMap<>();
 		if(interval > 0){
 			ex = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
 				public Thread newThread(Runnable r) {
@@ -95,8 +95,8 @@ public abstract class AbstractGroovitySourceLocator implements GroovitySourceLoc
 		if(log.isDebugEnabled()){
 			log.debug("Polling for source changes");
 		}
-		HashSet<GroovitySource> changeSources = new HashSet<GroovitySource>();
-		HashSet<String> oldSources = new HashSet<String>(cachedSources.keySet());
+		HashSet<GroovitySource> changeSources = new HashSet<>();
+		HashSet<String> oldSources = new HashSet<>(cachedSources.keySet());
 		for(GroovitySource source: this){
 			//log.info("Validating source "+source.getPath());
 			oldSources.remove(source.getPath());
@@ -125,7 +125,7 @@ public abstract class AbstractGroovitySourceLocator implements GroovitySourceLoc
 
 	public void addSourceListener(GroovitySourceListener listener) {
 		if(sourceListeners==null){
-			sourceListeners = new ArrayList<GroovitySourceListener>();
+			sourceListeners = new ArrayList<>();
 		}
 		sourceListeners.add(listener);
 	}

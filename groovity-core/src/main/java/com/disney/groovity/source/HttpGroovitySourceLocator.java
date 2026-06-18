@@ -148,7 +148,7 @@ public class HttpGroovitySourceLocator extends AbstractGroovitySourceLocator{
 	@Override
 	public Iterator<GroovitySource> iterator(){
 		AtomicReference<Throwable> errorRef = new AtomicReference<Throwable>();
-		List<GroovitySource> list = Collections.synchronizedList(new ArrayList<GroovitySource>());
+		List<GroovitySource> list = Collections.synchronizedList(new ArrayList<>());
 		try {
 			long time1=System.currentTimeMillis();
 			CountDownLatch pendingLatch = new CountDownLatch(1);
@@ -173,7 +173,7 @@ public class HttpGroovitySourceLocator extends AbstractGroovitySourceLocator{
 	private void traverse(final URI uri, final List<GroovitySource> fileList, final AtomicInteger pendingCounter, final CountDownLatch pendingLatch, final AtomicReference<Throwable> errorRef) throws IOException{
 		String dirListing = getBody(uri);		
         Matcher hrefMatcher = hrefPattern.matcher(dirListing);
-        ArrayList<Runnable> runnables = new ArrayList<Runnable>();
+        ArrayList<Runnable> runnables = new ArrayList<>();
         while(hrefMatcher.find())
         {
         	final String name = hrefMatcher.group(1);

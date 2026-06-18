@@ -131,7 +131,7 @@ public class MultivaluedHashMap<K, V> extends AbstractMultivaluedMap<K, V> imple
      * ({@code 16}) and the default load factor ({@code 0.75}).
      */
     public MultivaluedHashMap() {
-        super(new HashMap<K, List<V>>());
+        super(new HashMap<>());
     }
 
     /**
@@ -142,7 +142,7 @@ public class MultivaluedHashMap<K, V> extends AbstractMultivaluedMap<K, V> imple
      * @throws IllegalArgumentException if the initial capacity is negative.
      */
     public MultivaluedHashMap(int initialCapacity) {
-        super(new HashMap<K, List<V>>(initialCapacity));
+        super(new HashMap<>(initialCapacity));
     }
 
     /**
@@ -155,7 +155,7 @@ public class MultivaluedHashMap<K, V> extends AbstractMultivaluedMap<K, V> imple
      *                                  or the load factor is nonpositive
      */
     public MultivaluedHashMap(int initialCapacity, float loadFactor) {
-        super(new HashMap<K, List<V>>(initialCapacity, loadFactor));
+        super(new HashMap<>(initialCapacity, loadFactor));
     }
 
     /**
@@ -182,7 +182,7 @@ public class MultivaluedHashMap<K, V> extends AbstractMultivaluedMap<K, V> imple
      */
     private <T extends K, U extends V> void putAll(MultivaluedMap<T, U> map) {
         for (Entry<T, List<U>> e : map.entrySet()) {
-            store.put(e.getKey(), new ArrayList<V>(e.getValue()));
+            store.put(e.getKey(), new ArrayList<>(e.getValue()));
         }
     }
 

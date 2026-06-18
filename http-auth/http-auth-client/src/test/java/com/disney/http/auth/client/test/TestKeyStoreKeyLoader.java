@@ -45,7 +45,7 @@ public class TestKeyStoreKeyLoader {
     HttpClientContext context = new HttpClientContext();
 
     private KeyChainKeyLoader setupKeyLoader(String keystorePassword){
-    	Map<String,Object> config = new HashMap<String,Object>();
+    	Map<String,Object> config = new HashMap<>();
     	config.put(KeyStoreValueHandler.KEYSTORE_PASSWORD, keystorePassword);
     	config.put(KeyStoreValueHandler.KEYSTORE_TYPE, "JCEKS");
     	

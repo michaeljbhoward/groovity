@@ -29,22 +29,18 @@ import groovy.lang.Script;
 
 import java.io.CharArrayWriter;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.EnumSet;
 
 import org.apache.http.client.utils.DateUtils;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
 import com.disney.groovity.Groovity;
 import com.disney.groovity.GroovityBuilder;
 import com.disney.groovity.GroovityPhase;
-import com.disney.groovity.source.HttpGroovitySourceLocator;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 
 public class HttpLocatorTest {

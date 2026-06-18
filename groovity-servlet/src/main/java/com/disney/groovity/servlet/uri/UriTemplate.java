@@ -369,7 +369,7 @@ public class UriTemplate {
         }
 
         final String[] segments = path.split("/");
-        final Deque<String> resolvedSegments = new ArrayDeque<String>(segments.length);
+        final Deque<String> resolvedSegments = new ArrayDeque<>(segments.length);
 
         for (final String segment : segments) {
             if (segment.isEmpty() || ".".equals(segment)) {
@@ -618,7 +618,7 @@ public class UriTemplate {
         TemplateValueStrategy ns = new TemplateValueStrategy() {
             private final int lengthPlusOffset = length + offset;
             private int v = offset;
-            private final Map<String, String> mapValues = new HashMap<String, String>();
+            private final Map<String, String> mapValues = new HashMap<>();
 
             public String valueFor(String templateVariable, String matchedGroup) {
                 // Check if a template variable has already occurred
@@ -784,7 +784,7 @@ public class UriTemplate {
             final String path, final String query, final String fragment,
             final Map<String, ?> values, final boolean encode, final boolean encodeSlashInPath) {
 
-        Map<String, String> stringValues = new HashMap<String, String>();
+        Map<String, String> stringValues = new HashMap<>();
         for (Map.Entry<String, ?> e : values.entrySet()) {
             if (e.getValue() != null) {
                 stringValues.put(e.getKey(), e.getValue().toString());
@@ -906,7 +906,7 @@ public class UriTemplate {
             final String path, final String query, final String fragment,
             final String[] values, final boolean encode, final boolean encodeSlashInPath) {
 
-        final Map<String, Object> mapValues = new HashMap<String, Object>();
+        final Map<String, Object> mapValues = new HashMap<>();
         return createURIWithStringValues(
                 scheme, authority, userInfo, host, port, path, query, fragment, values, encode, encodeSlashInPath, mapValues);
     }

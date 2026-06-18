@@ -45,7 +45,7 @@ public class FileGroovitySourceLocator extends AbstractGroovitySourceLocator {
 	
 	@Override
 	public Iterator<GroovitySource> iterator() {
-		ArrayList<GroovitySource> files = new ArrayList<GroovitySource>();
+		ArrayList<GroovitySource> files = new ArrayList<>();
 		grabFilesRecursive(directory, files);
 		return files.iterator();
 	}

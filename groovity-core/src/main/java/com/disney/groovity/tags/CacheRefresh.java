@@ -25,13 +25,10 @@ package com.disney.groovity.tags;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.logging.Logger;
 
-import com.disney.groovity.GroovityConstants;
 import com.disney.groovity.Taggable;
 import com.disney.groovity.doc.Attr;
 import com.disney.groovity.doc.Tag;
-import com.disney.groovity.util.ScriptHelper;
 
 import groovy.lang.Closure;
 /**

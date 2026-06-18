@@ -99,7 +99,7 @@ public class XmlPolicyParser {
 			}
 		});
 		Document doc = builder.parse(source);
-		List<Verifier> configs = new ArrayList<Verifier>();
+		List<Verifier> configs = new ArrayList<>();
 		NodeList cnodes = doc.getDocumentElement().getChildNodes();
 		for(int i=0;i<cnodes.getLength();i++){
 			Node cnode = cnodes.item(i);
@@ -126,7 +126,7 @@ public class XmlPolicyParser {
 	}
 	
 	private static void processCommon(AbstractVerifier config, Element verifier) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
-		List<AccessController> accessControllers = new ArrayList<AccessController>();
+		List<AccessController> accessControllers = new ArrayList<>();
 		NodeList bcnodes = verifier.getChildNodes();
 		for(int j=0;j<bcnodes.getLength();j++){
 			Node bcnode = bcnodes.item(j);
@@ -148,7 +148,7 @@ public class XmlPolicyParser {
 	
 	private static SignatureVerifierImpl processSignature(Element sig, ServletContext context) throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, InvalidKeySpecException, MalformedURLException, URISyntaxException{
 		SignatureVerifierImpl config = new SignatureVerifierImpl();
-		List<KeyChain> keyChains = new ArrayList<KeyChain>();
+		List<KeyChain> keyChains = new ArrayList<>();
 		processCommon(config, sig);
 		NodeList bcnodes = sig.getChildNodes();
 		for(int j=0;j<bcnodes.getLength();j++){
@@ -195,7 +195,7 @@ public class XmlPolicyParser {
 			}
 		}
 		URL ku = location.contains(":") ? new URL(location) : context.getResource(location);
-		Map<String,Object> config = new HashMap<String,Object>();
+		Map<String,Object> config = new HashMap<>();
     	config.put(KeyStoreValueHandler.KEYSTORE_PASSWORD, password);
     	config.put(KeyStoreValueHandler.KEYSTORE_TYPE, type);
     	URIParcel<KeyStore> parcel = new URIParcel<KeyStore>(KeyStore.class,ku.toURI(),ttl,config);
@@ -204,7 +204,7 @@ public class XmlPolicyParser {
 	}
 	
 	private static Map<String,Key> processKeys(Element keys) throws NoSuchAlgorithmException, InvalidKeySpecException{
-		Map<String,Key> keyMap = new HashMap<String, Key>();
+		Map<String,Key> keyMap = new HashMap<>();
 		NodeList kids = keys.getChildNodes();
 		for(int i=0;i<kids.getLength();i+=2){
 			String keyId = kids.item(i).getTextContent().trim();
@@ -237,7 +237,7 @@ public class XmlPolicyParser {
 	private static DigestVerifierImpl processDigest(Element digest) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		DigestVerifierImpl config = new DigestVerifierImpl();
 		processCommon(config, digest);
-		ArrayList<PasswordDigester> passwordDigesters= new ArrayList<PasswordDigester>();
+		ArrayList<PasswordDigester> passwordDigesters= new ArrayList<>();
 		NodeList bcnodes = digest.getChildNodes();
 		for(int j=0;j<bcnodes.getLength();j++){
 			Node bcnode = bcnodes.item(j);
@@ -267,7 +267,7 @@ public class XmlPolicyParser {
 	private static BasicVerifierImpl processBasic(Element basic) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		BasicVerifierImpl bc = new BasicVerifierImpl();
 		processCommon(bc, basic);
-		List<PasswordChecker> passwordCheckers = new ArrayList<PasswordChecker>();
+		List<PasswordChecker> passwordCheckers = new ArrayList<>();
 		NodeList bcnodes = basic.getChildNodes();
 		for(int j=0;j<bcnodes.getLength();j++){
 			Node bcnode = bcnodes.item(j);
@@ -286,7 +286,7 @@ public class XmlPolicyParser {
 	}
 	
 	private static AccessController processAcl(Element acl){
-		ArrayList<String> keyIds = new ArrayList<String>();
+		ArrayList<String> keyIds = new ArrayList<>();
 		NodeList kids = acl.getChildNodes();
 		for(int i=0;i<kids.getLength();i++){
 			Node n = kids.item(i);
@@ -301,7 +301,7 @@ public class XmlPolicyParser {
 	}
 	
 	private static Map<String,String> processPasswords(Element passwords){
-		Map<String,String> passwordMap = new ConcurrentHashMap<String, String>();
+		Map<String,String> passwordMap = new ConcurrentHashMap<>();
 		NodeList kids = passwords.getChildNodes();
 		for(int i=0;i<kids.getLength();i+=2){
 			passwordMap.put(kids.item(i).getTextContent().trim(), kids.item(i+1).getTextContent().trim());
