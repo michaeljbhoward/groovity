@@ -1,0 +1,174 @@
+/*******************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "Apache License")
+ * with the following modification; you may not use this file except in
+ * compliance with the Apache License and the following modification to it:
+ * Section 6. Trademarks. is deleted and replaced with:
+ *
+ * 6. Trademarks. This License does not grant permission to use the trade
+ *     names, trademarks, service marks, or product names of the Licensor
+ *     and its affiliates, except as required to comply with Section 4(c) of
+ *     the License and to reproduce the content of the NOTICE file.
+ *
+ * You may obtain a copy of the Apache License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Apache License with the above modification is
+ * distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the Apache License for the specific
+ * language governing permissions and limitations under the Apache License.
+ *******************************************************************************/
+import redis.clients.jedis.JedisPool
+import redis.clients.jedis.JedisPoolConfig
+import redis.clients.jedis.Jedis
+import com.disney.groovity.data.StorePayload
+
+static final ConcurrentHashMap<String, JedisPool> POOLS = new ConcurrentHashMap<>()
+/**
+ * The redis data source supports the following typeConfiguration options on types that leverage it
+ *
+ * redis.host     = Redis server hostname (default: localhost)
+ * redis.port     = Redis server port (default: 6379)
+ * redis.password = Redis authentication password (optional)
+ * redis.db       = Redis database index (default: 0)
+ * redis.timeout  = Connection timeout in milliseconds (default: 2000)
+ * redis.prefix   = Key namespace prefix (default: groovity)
+ */
+
+static destroy(){
+	POOLS.values().each{ it.close() }
+	POOLS.clear()
+}
+
+@CompileStatic
+private static JedisPool getPool(Map typeConf){
+	String host = typeConf?.containsKey('redis.host') ? typeConf.get('redis.host').toString() : 'localhost'
+	int port = typeConf?.containsKey('redis.port') ? Integer.parseInt(typeConf.get('redis.port').toString()) : 6379
+	String password = typeConf?.containsKey('redis.password') ? typeConf.get('redis.password').toString() : null
+	int db = typeConf?.containsKey('redis.db') ? Integer.parseInt(typeConf.get('redis.db').toString()) : 0
+	int timeout = typeConf?.containsKey('redis.timeout') ? Integer.parseInt(typeConf.get('redis.timeout').toString()) : 2000
+	String poolKey = host + ':' + port + ':' + db
+	POOLS.computeIfAbsent(poolKey){ new JedisPool(new JedisPoolConfig(), host, port, timeout, password, db) }
+}
+
+@CompileStatic
+private static String getPrefix(Map typeConf){
+	typeConf?.containsKey('redis.prefix') ? typeConf.get('redis.prefix').toString() : 'groovity'
+}
+
+@CompileStatic
+private static String dataKey(String prefix, String id){
+	prefix + ':' + id
+}
+
+@CompileStatic
+private static String indexKey(String prefix){
+	prefix + ':_idx'
+}
+
+@CompileStatic
+@Function(info="Look up one or more objects from the Redis data layer")
+public void call(Map<String,Object> map, Map typeConf){
+	String prefix = getPrefix(typeConf)
+	JedisPool pool = getPool(typeConf)
+	Jedis jedis = pool.getResource()
+	try{
+		map.each{ entry ->
+			String key = dataKey(prefix, entry.key)
+			String dataJson = jedis.hget(key, 'data')
+			if(dataJson != null){
+				entry.value = parse(value: dataJson)
+			}
+		}
+	}
+	finally{
+		jedis.close()
+	}
+}
+
+@CompileStatic
+@Function(info="Store an object in the Redis data layer")
+public String store(String id, StorePayload payload, Map typeConf){
+	String prefix = getPrefix(typeConf)
+	JedisPool pool = getPool(typeConf)
+	Jedis jedis = pool.getResource()
+	try{
+		if(!id){
+			id = UUID.randomUUID().toString()
+			while(jedis.exists(dataKey(prefix, id))){
+				id = UUID.randomUUID().toString()
+			}
+		}
+		String key = dataKey(prefix, id)
+		long updateTime = System.currentTimeMillis()
+		StringWriter sw = new StringWriter()
+		write(value: payload.data, to: sw)
+		String json = sw.toString()
+		Map<String, String> hash = new HashMap<>()
+		hash.put('data', json)
+		hash.put('updateTime', Long.toString(updateTime))
+		jedis.hset(key, hash)
+		jedis.zadd(indexKey(prefix), (double) updateTime, id)
+	}
+	finally{
+		jedis.close()
+	}
+	id
+}
+
+@CompileStatic
+@Function(info="Remove an object from the Redis data layer")
+public void delete(String id, Map typeConf){
+	String prefix = getPrefix(typeConf)
+	JedisPool pool = getPool(typeConf)
+	Jedis jedis = pool.getResource()
+	try{
+		jedis.del(dataKey(prefix, id))
+		jedis.zrem(indexKey(prefix), id)
+	}
+	finally{
+		jedis.close()
+	}
+}
+
+@CompileStatic
+@Function(info="Retrieve IDs of Redis entries updated within the given date range")
+public long dateRange(String key, long lowerBound, long upperBound, Map typeConf, Closure keyCallback){
+	String prefix = getPrefix(typeConf)
+	JedisPool pool = getPool(typeConf)
+	Jedis jedis = pool.getResource()
+	try{
+		if(key != null){
+			String dKey = dataKey(prefix, key)
+			String ts = jedis.hget(dKey, 'updateTime')
+			if(ts != null){
+				long updateTime = Long.parseLong(ts)
+				if(lowerBound < updateTime && updateTime < upperBound){
+					keyCallback(key)
+					return updateTime
+				}
+			}
+			return lowerBound
+		}
+		String idxKey = indexKey(prefix)
+		List<String> members = jedis.zrangeByScore(idxKey, '(' + lowerBound, '(' + upperBound)
+		long maxTime = lowerBound
+		if(members != null){
+			for(String member : members){
+				String ts = jedis.hget(dataKey(prefix, member), 'updateTime')
+				if(ts != null){
+					long updateTime = Long.parseLong(ts)
+					keyCallback(member)
+					if(updateTime > maxTime){
+						maxTime = updateTime
+					}
+				}
+			}
+		}
+		return maxTime
+	}
+	finally{
+		jedis.close()
+	}
+}

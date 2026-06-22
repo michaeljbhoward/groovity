@@ -161,6 +161,62 @@ java -jar groovity-standalone/target/groovity-standalone-2.1.0-beta.2-SNAPSHOT.j
 The default port is **9880**. Pass a port number as the first argument to
 override.
 
+## Data sources (`groovity-data`)
+
+The `groovity-data` module provides pluggable persistence back-ends via source
+scripts in `src/main/groovity/data/sources/`. A type selects its source with the
+`source` key in its static `conf` map.
+
+### Built-in sources
+
+| Source     | Script              | Description                          |
+|------------|---------------------|--------------------------------------|
+| `memory`   | `sources/memory`    | In-process `ConcurrentHashMap`       |
+| `file`     | `sources/file`      | Local filesystem (JSON/XML files)    |
+| `http`     | `sources/http`      | Remote REST endpoint                 |
+| `redis`    | `sources/redis`     | Redis server (Jedis client)          |
+
+### Redis source configuration
+
+Set `source: 'redis'` in the type's `conf` map and provide connection details
+via the following keys:
+
+| Key              | Default     | Description                              |
+|------------------|-------------|------------------------------------------|
+| `redis.host`     | `localhost` | Redis server hostname                    |
+| `redis.port`     | `6379`      | Redis server port                        |
+| `redis.password` | *(none)*    | Redis authentication password (optional) |
+| `redis.db`       | `0`         | Redis database index                     |
+| `redis.timeout`  | `2000`      | Connection timeout in milliseconds       |
+| `redis.prefix`   | `groovity`  | Key namespace prefix                     |
+
+Example type definition:
+
+```groovy
+public static conf = [
+    source : 'redis',
+    ttl : '30',
+    refresh : '15',
+    'redis.host' : 'redis.example.com',
+    'redis.prefix' : 'myapp_widgets'
+]
+
+class Widget implements DataModel, Stored, HasName {
+    String description
+}
+
+new Widget()
+```
+
+**Redis key layout** &mdash; each entity is stored as a Redis hash at
+`{prefix}:{id}` with fields `data` (JSON) and `updateTime` (epoch ms). A sorted
+set at `{prefix}:_idx` indexes IDs by update time to support efficient
+`dateRange` / watch queries.
+
+**Prerequisites** &mdash; a running Redis server reachable at the configured
+host/port. The `groovity-data` module depends on Jedis 4.4.x (pulled in
+automatically by Maven).
+
 ## Gotchas
 
 - **JDK version matters.** The project targets Java 8. Building with JDK 11+
