@@ -28,7 +28,7 @@
 
 import java.security.MessageDigest;
 import org.apache.http.util.EntityUtils;
-import javax.xml.bind.DatatypeConverter;
+import java.util.HexFormat;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.impl.client.BasicAuthCache;
 
@@ -54,7 +54,7 @@ formData = [
 	userName:'admin',
 	fullName:'Admin User',
 	nickName:'addie',
-	digest:DatatypeConverter.printHexBinary(md.digest("admin:${conf.PORTAL_AUTH_REALM}:mypass".bytes))
+	digest:HexFormat.of().withUpperCase().formatHex(md.digest("admin:${conf.PORTAL_AUTH_REALM}:mypass".bytes))
 ] 
 http(url:"${host}/",method:"POST",data:formData,{
 	handler({
@@ -183,7 +183,7 @@ http(url:"${host}/admin/people",
 		userName:'peeps',
 		fullName:'Regular User',
 		nickName:'peepers',
-		digest:DatatypeConverter.printHexBinary(md.digest("peeps:${conf.PORTAL_AUTH_REALM}:jeez".bytes))
+		digest:HexFormat.of().withUpperCase().formatHex(md.digest("peeps:${conf.PORTAL_AUTH_REALM}:jeez".bytes))
 	] ,
 	{
 		handler({
@@ -241,7 +241,7 @@ http(url:"${host}/admin/people",
 		userName:'nobody',
 		fullName:'Nobody User',
 		nickName:'never',
-		digest:DatatypeConverter.printHexBinary(md.digest("nobody:${conf.PORTAL_AUTH_REALM}:never".bytes))
+		digest:HexFormat.of().withUpperCase().formatHex(md.digest("nobody:${conf.PORTAL_AUTH_REALM}:never".bytes))
 	] ,
 	{
 		handler({

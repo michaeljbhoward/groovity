@@ -35,5 +35,5 @@ def h2 = hash{"abcdefg"}
 <g:write><g:hash encoding="hex" >${message}</g:hash></g:write>
 <g:write value="|"/>
 <g:hash var="h" value="${message}" algorithm="sha1" encoding="none"/>
-<g:write value="${javax.xml.bind.DatatypeConverter.printByte(h[0])}"/>
+<g:write value="${Byte.toString(h[0])}"/>
 ~>
