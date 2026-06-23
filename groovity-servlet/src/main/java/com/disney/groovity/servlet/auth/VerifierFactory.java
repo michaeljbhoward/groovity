@@ -459,10 +459,19 @@ public class VerifierFactory {
 	
 	private Object fallbackConstruct(Object className, Class<Script> scriptClass) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		try{
-			return Class.forName(className.toString()).newInstance();
+			return Class.forName(className.toString()).getDeclaredConstructor().newInstance();
 		}
 		catch(ClassNotFoundException ce){
-			 return Class.forName(className.toString(),true,scriptClass.getClassLoader()).newInstance();
+			try {
+				return Class.forName(className.toString(),true,scriptClass.getClassLoader()).getDeclaredConstructor().newInstance();
+			} catch (java.lang.reflect.InvocationTargetException | NoSuchMethodException e) {
+				String msg = e instanceof java.lang.reflect.InvocationTargetException ? "Constructor threw: " + e.getCause() : e.getMessage();
+				throw new InstantiationException(msg);
+			}
+		}
+		catch(java.lang.reflect.InvocationTargetException | NoSuchMethodException e){
+			String msg = e instanceof java.lang.reflect.InvocationTargetException ? "Constructor threw: " + e.getCause() : e.getMessage();
+			throw new InstantiationException(msg);
 		}
 	}
 	

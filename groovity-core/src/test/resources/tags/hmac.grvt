@@ -35,5 +35,5 @@ def makeHex(key,value){
 <g:write>${makeHex(secret, message)}</g:write>
 <g:write value="|"/>
 <g:hmac var="signature" key="${secret}" value="${message}" algorithm="sha1" encoding="none"/>
-<g:write value="${javax.xml.bind.DatatypeConverter.printByte(signature[0])}"/>
+<g:write value="${Byte.toString(signature[0])}"/>
 ~>
