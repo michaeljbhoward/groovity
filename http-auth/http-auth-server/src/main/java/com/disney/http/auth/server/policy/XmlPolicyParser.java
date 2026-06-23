@@ -147,7 +147,7 @@ public class XmlPolicyParser {
 		config.setAccessControllers(accessControllers);
 	}
 	
-	private static SignatureVerifierImpl processSignature(Element sig, ServletContext context) throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, InvalidKeySpecException, MalformedURLException, URISyntaxException{
+	private static SignatureVerifierImpl processSignature(Element sig, ServletContext context) throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, InvalidKeySpecException, MalformedURLException, URISyntaxException, NoSuchMethodException, InvocationTargetException{
 		SignatureVerifierImpl config = new SignatureVerifierImpl();
 		List<KeyChain> keyChains = new ArrayList<>();
 		processCommon(config, sig);
