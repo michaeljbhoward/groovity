@@ -6,20 +6,20 @@ Guide for building, testing, and running Groovity from source.
 
 | Tool  | Required version | Notes |
 |-------|-----------------|-------|
-| JDK   | **8** (1.8)     | Source and target level are set to 1.8 in the root POM. OpenJDK 8 is recommended. |
+| JDK   | **17**          | Source and target level are set to 17 in the root POM. OpenJDK 17 is recommended. |
 | Maven | **3.6+**        | Tested with 3.6.3. |
 
 ### Installing on Ubuntu / Debian
 
 ```bash
 sudo apt-get update
-sudo apt-get install -y openjdk-8-jdk maven
+sudo apt-get install -y openjdk-17-jdk maven
 ```
 
-Make sure Maven picks up JDK 8:
+Make sure Maven picks up JDK 17:
 
 ```bash
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ```
 
 You can add the `export` to your shell profile (`~/.bashrc`, `~/.zshrc`, etc.) to make it permanent.
@@ -28,15 +28,15 @@ Verify:
 
 ```bash
 mvn --version
-# Java version should show 1.8.x
+# Java version should show 17.x
 ```
 
 ### macOS (Homebrew)
 
 ```bash
-# Install a JDK 8 distribution (e.g. Temurin)
-brew install --cask temurin@8
-export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+# Install a JDK 17 distribution (e.g. Temurin)
+brew install --cask temurin@17
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
 
 brew install maven
 ```
@@ -163,11 +163,11 @@ override.
 
 ## Gotchas
 
-- **JDK version matters.** The project targets Java 8. Building with JDK 11+
-  may produce warnings or failures in some modules due to removed/relocated
-  APIs. Stick with JDK 8 for a clean build.
+- **JDK version matters.** The project targets Java 17. Building with older
+  JDKs will fail due to source/target level 17 in the root POM. Use JDK 17+
+  for a clean build.
 - **Maven uses `JAVA_HOME`.** If you have multiple JDKs installed, make sure
-  `JAVA_HOME` points to your JDK 8 installation before running Maven. Verify
+  `JAVA_HOME` points to your JDK 17 installation before running Maven. Verify
   with `mvn --version`.
 - **npm warnings during build.** The `groovity-servlet-admin` module runs `npm
   install` as part of its build. You may see npm audit warnings — these do not
