@@ -130,8 +130,7 @@ public class UriTemplate {
     };
 
     /**
-     * A strategy interface for processing parameters, should be replaced with
-     * a JDK 8 one day in the future.
+     * A strategy interface for processing parameters.
      */
     private static interface TemplateValueStrategy {
         /**
