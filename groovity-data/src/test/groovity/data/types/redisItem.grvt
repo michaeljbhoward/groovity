@@ -1,0 +1,12 @@
+public static conf = [
+	source : 'redis',
+	ttl : '30',
+	refresh : '15',
+	'redis.prefix' : 'test_redisItem'
+]
+
+class RedisItem implements DataModel, Stored, HasName{
+	String description
+}
+
+new RedisItem()

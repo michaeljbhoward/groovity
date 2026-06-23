@@ -1,0 +1,90 @@
+load '/data/factory'
+
+assert factory.isKnownType('redisItem')
+
+// --- Store with explicit ID ---
+def item = factory('redisItem')
+item.name = 'Test Item'
+item.description = 'A test item stored in Redis'
+item.pointer.id = 'item1'
+item.store()
+
+// --- Load ---
+factory.invalidate('redisItem', 'item1')
+def loaded = factory('redisItem', 'item1')
+assert loaded != null
+assert loaded.name == 'Test Item'
+assert loaded.description == 'A test item stored in Redis'
+
+// --- Update ---
+loaded.description = 'Updated description'
+loaded.store()
+factory.invalidate('redisItem', 'item1')
+def updated = factory('redisItem', 'item1')
+assert updated.description == 'Updated description'
+assert updated.name == 'Test Item'
+
+// --- Watch via dateRange ---
+CountDownLatch latch = new CountDownLatch(1)
+def watcher = factory.watch('redisItem', 'item1', 250){ pointer ->
+	latch.countDown()
+}
+
+Thread.sleep(100)
+updated.description = 'Watched update'
+updated.store()
+
+try{
+	assert latch.await(3, TimeUnit.SECONDS)
+}
+finally{
+	watcher.cancel(true)
+}
+
+// --- Delete ---
+factory.invalidate('redisItem', 'item1')
+def preDelete = factory('redisItem', 'item1')
+assert preDelete != null
+preDelete.delete()
+factory.invalidate('redisItem', 'item1')
+assert factory('redisItem', 'item1') == null
+
+// --- Auto-generated ID ---
+def auto = factory('redisItem')
+auto.name = 'Auto ID Item'
+auto.description = 'Should get a UUID'
+auto.store()
+
+assert auto.pointer.id != null
+
+factory.invalidate('redisItem', auto.pointer.id)
+def autoLoaded = factory('redisItem', auto.pointer.id)
+assert autoLoaded != null
+assert autoLoaded.name == 'Auto ID Item'
+assert autoLoaded.description == 'Should get a UUID'
+
+autoLoaded.delete()
+factory.invalidate('redisItem', autoLoaded.pointer.id)
+assert factory('redisItem', autoLoaded.pointer.id) == null
+
+// --- Broad watch (no specific key) ---
+CountDownLatch broadLatch = new CountDownLatch(1)
+def broadWatcher = factory.watch('redisItem', 250){ pointer ->
+	if(pointer.id == 'watchAll'){
+		broadLatch.countDown()
+	}
+}
+
+Thread.sleep(100)
+def watchItem = factory('redisItem')
+watchItem.name = 'Broad Watch'
+watchItem.pointer.id = 'watchAll'
+watchItem.store()
+
+try{
+	assert broadLatch.await(3, TimeUnit.SECONDS)
+}
+finally{
+	broadWatcher.cancel(true)
+	watchItem.delete()
+}
