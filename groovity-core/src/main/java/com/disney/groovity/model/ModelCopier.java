@@ -39,8 +39,8 @@ public class ModelCopier {
 	
 	private final Object makeNew(Class<?> c) {
 		try {
-			return c.newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
+			return c.getDeclaredConstructor().newInstance();
+		} catch (ReflectiveOperationException e) {
 			throw new RuntimeException(e);
 		}
 	}

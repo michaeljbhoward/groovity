@@ -264,7 +264,7 @@ public class Http implements Taggable {
 		Object target = resolve(attributes,"to");
 		if(target instanceof Class) {
 			if(!Object.class.equals(target)) {
-				target = ((Class)target).newInstance();
+				target = ((Class)target).getDeclaredConstructor().newInstance();
 			}
 		}
 		if(target == null) {

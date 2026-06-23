@@ -96,8 +96,8 @@ public class GroovityObjectConverter {
 			List<Object> outObjs = null;
 			if(!out.isInterface()) {
 				try {
-					outObjs = (List<Object>) out.newInstance();
-				} catch (InstantiationException | IllegalAccessException e) {
+					outObjs = (List<Object>) out.getDeclaredConstructor().newInstance();
+				} catch (ReflectiveOperationException e) {
 				}
 			}
 			if(outObjs == null) {
@@ -237,7 +237,7 @@ public class GroovityObjectConverter {
 			Map<Object,Object> result = null;
 			if(!out.isInterface()){
 				try {
-					result = (Map<Object,Object>) out.newInstance();
+					result = (Map<Object,Object>) out.getDeclaredConstructor().newInstance();
 				} catch (Exception e) {
 				} 
 			}
