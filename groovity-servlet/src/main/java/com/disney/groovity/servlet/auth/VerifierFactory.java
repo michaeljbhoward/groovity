@@ -465,11 +465,13 @@ public class VerifierFactory {
 			try {
 				return Class.forName(className.toString(),true,scriptClass.getClassLoader()).getDeclaredConstructor().newInstance();
 			} catch (java.lang.reflect.InvocationTargetException | NoSuchMethodException e) {
-				throw new InstantiationException(e.getMessage());
+				String msg = e instanceof java.lang.reflect.InvocationTargetException ? "Constructor threw: " + e.getCause() : e.getMessage();
+				throw new InstantiationException(msg);
 			}
 		}
 		catch(java.lang.reflect.InvocationTargetException | NoSuchMethodException e){
-			throw new InstantiationException(e.getMessage());
+			String msg = e instanceof java.lang.reflect.InvocationTargetException ? "Constructor threw: " + e.getCause() : e.getMessage();
+			throw new InstantiationException(msg);
 		}
 	}
 	
