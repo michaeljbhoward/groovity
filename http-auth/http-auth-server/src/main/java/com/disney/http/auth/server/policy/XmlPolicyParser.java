@@ -24,6 +24,7 @@
 package com.disney.http.auth.server.policy;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -81,7 +82,7 @@ import com.disney.http.auth.keychain.MapKeyChainImpl;
  * @author Alex Vigdor
  */
 public class XmlPolicyParser {
-	public static Verifier parsePolicy(InputSource source, ServletContext servletContext) throws SAXException, ParserConfigurationException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, InvalidKeySpecException, URISyntaxException{
+	public static Verifier parsePolicy(InputSource source, ServletContext servletContext) throws SAXException, ParserConfigurationException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, InvalidKeySpecException, URISyntaxException, NoSuchMethodException, InvocationTargetException{
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setValidating(true);
 		factory.setNamespaceAware(false);
@@ -125,7 +126,7 @@ public class XmlPolicyParser {
 		return new VerifierChain(configs);
 	}
 	
-	private static void processCommon(AbstractVerifier config, Element verifier) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+	private static void processCommon(AbstractVerifier config, Element verifier) throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException{
 		List<AccessController> accessControllers = new ArrayList<>();
 		NodeList bcnodes = verifier.getChildNodes();
 		for(int j=0;j<bcnodes.getLength();j++){
@@ -139,7 +140,7 @@ public class XmlPolicyParser {
 					accessControllers.add(processAcl(bcel));
 				}
 				else if(bcel.getNodeName().equals("accessController")){
-					accessControllers.add((AccessController) Class.forName(bcel.getAttribute("class")).newInstance());
+					accessControllers.add((AccessController) Class.forName(bcel.getAttribute("class")).getDeclaredConstructor().newInstance());
 				}
 			}
 		}
@@ -234,7 +235,7 @@ public class XmlPolicyParser {
 		return keyMap;
 	}
 	
-	private static DigestVerifierImpl processDigest(Element digest) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+	private static DigestVerifierImpl processDigest(Element digest) throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException{
 		DigestVerifierImpl config = new DigestVerifierImpl();
 		processCommon(config, digest);
 		ArrayList<PasswordDigester> passwordDigesters= new ArrayList<>();
@@ -247,7 +248,7 @@ public class XmlPolicyParser {
 					passwordDigesters.add(new MapPasswordDigester(processPasswords(bcel)));
 				}
 				else if(bcel.getNodeName().equals("passwordDigester")){
-					passwordDigesters.add((PasswordDigester) Class.forName(bcel.getAttribute("class")).newInstance());
+					passwordDigesters.add((PasswordDigester) Class.forName(bcel.getAttribute("class")).getDeclaredConstructor().newInstance());
 				}
 				else if(bcel.getNodeName().equals("maxNonceAge")){
 					config.setMaxNonceAge(Long.valueOf(bcel.getTextContent()));
@@ -264,7 +265,7 @@ public class XmlPolicyParser {
 		return config;
 	}
 	
-	private static BasicVerifierImpl processBasic(Element basic) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+	private static BasicVerifierImpl processBasic(Element basic) throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException{
 		BasicVerifierImpl bc = new BasicVerifierImpl();
 		processCommon(bc, basic);
 		List<PasswordChecker> passwordCheckers = new ArrayList<>();
@@ -277,7 +278,7 @@ public class XmlPolicyParser {
 					passwordCheckers.add(new MapPasswordChecker(processPasswords(bcel)));
 				}
 				else if(bcel.getNodeName().equals("passwordChecker")){
-					passwordCheckers.add((PasswordChecker) Class.forName(bcel.getAttribute("class")).newInstance());
+					passwordCheckers.add((PasswordChecker) Class.forName(bcel.getAttribute("class")).getDeclaredConstructor().newInstance());
 				}
 			}
 		}
