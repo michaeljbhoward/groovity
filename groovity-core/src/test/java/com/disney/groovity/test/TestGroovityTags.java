@@ -144,6 +144,11 @@ public class TestGroovityTags {
 	}
 	
 	@Test
+	public void testEachPrimitiveArrayTag() throws Exception{
+		Assert.assertEquals("1,2,3,",run("/eachPrimitiveArray"));
+	}
+	
+	@Test
 	public void testSetTag() throws Exception{
 		Binding binding = new Binding();
 		Script gs = groovity.load("/set",binding);
